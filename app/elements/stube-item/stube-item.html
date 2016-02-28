@@ -19,6 +19,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         display: block;
         width: 100%;
         background-color: white;
+        margin-bottom: 30px;
       }
       img {
         width: 40%;
@@ -34,16 +35,19 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     .flexchild {
       @apply(--layout-flex);
     }
+    .gris {
+      color: --google-grey-100;
+    }
     </style>
     <div class="container">
 
-    <img src="https://i.ytimg.com/vi/gjwr-7PgpN8/mqdefault.jpg" />
+    <img src="{{thumb}}" />
     
 
     <div id="entry">
     <div class="paper-font-body3">{{title}}</div>
     <div class="paper-font-body1">{{username}}</div>
-    <div class="paper-font-body1"><span>{{views}}</span> views</div>
+    <div class="paper-font-body1 gris"><span>{{views}}</span> views</div>
 
   </div>
   </div>
@@ -71,6 +75,10 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           views: {
             type: Number,
             value: 3120
+          },
+          thumb: {
+            type: String,
+            value: "https://i.ytimg.com/vi/gjwr-7PgpN8/mqdefault.jpg"
           }
         }
       });
