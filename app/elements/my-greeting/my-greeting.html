@@ -8,19 +8,34 @@ Code distributed by Google as part of the polymer project is also
 subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
 -->
 <link rel="import" href="../../bower_components/polymer/polymer.html">
+<link rel="import" href="../../bower_components/paper-material/paper-material.html">
 
 <dom-module id="my-greeting">
   <template>
-    <style include="shared-styles"></style>
+    <style is="custom-style" include="shared-styles"></style>
+
     <style>
       :host {
         display: block;
+        width: 100%;
+        background-color: white;
+      }
+      video {
+        width: 100%;
+      }
+      #entry {
+        margin: 0px;
       }
     </style>
-    <h2 class="page-title"><span>{{greeting}}</span></h2>
-    <span class="paper-font-body2">Update text to change the greeting.</span>
+    <video src="http://gateway.ipfs.io/ipfs/QmTKZgRNwDNZwHtJSjCp6r5FYefzpULfy37JvMt9DwvXse/video.mp4" controls></video>
+    <div id="entry">
+    <h2 class="page-title"><span>{{title}}</span></h2>
+    <span class="paper-font-body1">{{description}}</span>
+    <span class="paper-font-body2">{{description}}</span>
+    <span class="paper-font-body3">{{description}}</span>
+    <span class="paper-font-body4">{{description}}</span>
+  </div>
     <!-- Listens for "input" event and sets greeting to <input>.value -->
-    <input class="paper-font-body2" value="{{greeting::input}}">
   </template>
 
   <script>
@@ -31,9 +46,14 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         is: 'my-greeting',
 
         properties: {
-          greeting: {
+          title: {
             type: String,
-            value: 'Welcome!',
+            value: 'GangNam Style!',
+            notify: true
+          },
+          description: {
+            type: String,
+            value: 'GangNam Style!',
             notify: true
           }
         }
