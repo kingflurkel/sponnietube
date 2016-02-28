@@ -123,11 +123,15 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
             <section data-route="home">
             <paper-material elevation="1">
                 <h1 class="paper-font-headline">Since you were gone</h1>
+         
                 <stube-item 
                   title="Why I will never print in ABS again" 
                   username="sponnet" 
-                  views="10" 
-                  thumb="http://4.bp.blogspot.com/-GA-0S3-8XkQ/UjlGIVpoY5I/AAAAAAAAAFI/VMHUo3w8uS8/s1600/GoProVapourFinish.jpg"></stube-item>
+                  views="10"
+                  duration="1220"
+                  thumb="http://4.bp.blogspot.com/-GA-0S3-8XkQ/UjlGIVpoY5I/AAAAAAAAAFI/VMHUo3w8uS8/s1600/GoProVapourFinish.jpg"
+                  ></stube-item>
+        
                 <stube-item></stube-item>
                 <stube-item></stube-item>
                 <stube-item></stube-item>
@@ -148,13 +152,11 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
               </paper-material>
             </section>
 
-            <section data-route="user-info">
-              <paper-material elevation="1">
+            <section data-route="clip">
+              <stube-clip hash="{{params.hash}}"></stube-clip>
                 <h2 class="page-title">
-                User:<span>{{params.name}}</span>
+                User:<span>{{params.hash}}</span>
                 </h2>
-                <div>This is <span>{{params.name}}</span>'s section</div>
-              </paper-material>
             </section>
 
             <section data-route="contact">

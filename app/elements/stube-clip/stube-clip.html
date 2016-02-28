@@ -1,0 +1,66 @@
+<!--
+@license
+Copyright (c) 2015 The Polymer Project Authors. All rights reserved.
+This code may only be used under the BSD style license found at http://polymer.github.io/LICENSE.txt
+The complete set of authors may be found at http://polymer.github.io/AUTHORS.txt
+The complete set of contributors may be found at http://polymer.github.io/CONTRIBUTORS.txt
+Code distributed by Google as part of the polymer project is also
+subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
+-->
+
+<link rel="import" href="../../bower_components/polymer/polymer.html">
+
+
+<dom-module id="stube-clip">
+  <template>
+    <style is="custom-style" include="shared-styles"></style>
+
+    <style>
+      :host {
+        display: block;
+      }
+      paper-material {
+        padding: 20px;
+      }
+        .gris {
+      color: --google-grey-100;
+    }
+
+    </style>
+    <stube-player hash=""></stube-player>
+    <paper-material elevation="1">
+      <div class="paper-font-headline">{{title}}</div>
+      <div class="paper-font-body1">{{descr}}</div>
+      <div class="paper-font-body2 gris">{{username}}</div>
+      
+    </paper-material>
+
+  </template>
+  <script>
+  (function() {
+    'use strict';
+
+    Polymer({
+      is: 'stube-clip',
+
+      properties: {
+        title: {
+          type: String,
+          value: 'Why ABS sucks',
+          notify: true
+        },
+        descr: {
+          type: String,
+          value: 'Every night I try to print in ABS but it never works like it should.',
+          notify: true
+        },
+        username: {
+          type: String,
+          value: 'kingflurkel',
+          notify: true
+        }
+      }
+    });
+  })();
+  </script>
+</dom-module>

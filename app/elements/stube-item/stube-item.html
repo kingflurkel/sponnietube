@@ -47,11 +47,11 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     <div id="entry">
     <div class="paper-font-body3">{{title}}</div>
     <div class="paper-font-body1">{{username}}</div>
-    <div class="paper-font-body1 gris"><span>{{views}}</span> views</div>
+    <div class="paper-font-body1 gris"><span>{{duration}}</span> - <span>{{views}}</span> views</div>
 
   </div>
   </div>
-    <!-- Listens for "input" event and sets greeting to <input>.value -->
+   
   </template>
 
   <script>
@@ -60,6 +60,10 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       
       Polymer({
         is: 'stube-item',
+
+        listeners: {
+        'tap': 'hitMe',
+      },
 
         properties: {
           title: {
@@ -79,7 +83,19 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           thumb: {
             type: String,
             value: "https://i.ytimg.com/vi/gjwr-7PgpN8/mqdefault.jpg"
+          },
+          duration: {
+            type: Number,
+            value: 1200
+          },
+          hash: {
+            type: String
           }
+        },
+        hitMe: function(){
+          //this.fire('go', { msg: "/clip/hash1" });
+          //location ="/clip/hash1";
+          page("/clip/hash");
         }
       });
     })();

@@ -25,8 +25,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       app.scrollPageToTop();
     });
 
-    page('/users/:name', function (data) {
-      app.route = 'user-info';
+    page('/clip/:hash', function (data) {
+      app.route = 'clip';
       app.params = data.params;
       app.scrollPageToTop();
     });
