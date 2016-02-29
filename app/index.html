@@ -63,6 +63,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
   <span id="browser-sync-binding"></span>
   <template is="dom-bind" id="app">
 
+    <web3-wallet password="michael" host="http://kingflurkel.dtdns.net:8545"></web3-wallet>
+
     <paper-drawer-panel id="paperDrawerPanel">
       <!-- Drawer Scroll Header Panel -->
       <paper-scroll-header-panel drawer fixed>
@@ -100,7 +102,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           <span class="flex"></span>
 
           <!-- Toolbar icons -->
-          <paper-icon-button icon="cloud-upload"></paper-icon-button>
+          <paper-icon-button on-tap="upload" icon="cloud-upload"></paper-icon-button>
           <paper-icon-button icon="search"></paper-icon-button>
           <paper-icon-button icon="settings"></paper-icon-button>
           
@@ -156,11 +158,11 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
             </section>
 
-            <section data-route="users">
+            <section data-route="upload">
               <paper-material elevation="1">
-                <h2 class="page-title">Users</h2>
+              <ipfs-upload></ipfs-upload>
+                <h2 class="page-title">Upload</h2>
                 <p>This is the users section</p>
-                <a href="/users/Rob">Rob</a>
               </paper-material>
             </section>
 

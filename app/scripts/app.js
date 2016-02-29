@@ -75,4 +75,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     page(e);
   };
 
+  app.upload = function(){
+    page('upload');
+  };
+
 })(document);
