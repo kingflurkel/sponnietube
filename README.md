@@ -1,3 +1,21 @@
+#SponnieTube (wip)
+
+##THE IDEA
+Youtube is a centralised advertising censorship machine. We want to decentralise this and create a place where everybody can upload any video material, without having to fear authorities or self-proclaimed authorities.
+
+##THE EXECUTION
++ IPFS for data storage
++ Ethereum smart contracts for reputation, user accounts, indexing, etc.
++ Polymer as a front-end app, 
++ hosted via IPNS > DNS.
+
+##THE TEAM
+Currently working on it; 
++ @kingflurkel
++ @sponnet
+
+Join us!
+
 ![](https://cloud.githubusercontent.com/assets/110953/7877439/6a69d03e-0590-11e5-9fac-c614246606de.png)
 ## Polymer Starter Kit
 
