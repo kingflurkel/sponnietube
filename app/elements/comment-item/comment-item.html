@@ -10,30 +10,40 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
 <link rel="import" href="../../bower_components/polymer/polymer.html">
 
-<dom-module id="stube-player">
+<dom-module id="comment-item">
   <template>
     <style>
       :host {
         display: block;
+        margin-bottom: 20px;
       }
-      video {
-        width: 100%;
+      .avatar {
+        width: 40px;
+        height: 40px;
       }
-
     </style>
-    <video src="http://localhost:8080/ipfs/QmWf9rayrF8UqoDLWXYKcJk5Z9ZtuLJqi3EsVbrhatB3R7" controls></video>
+    <div class="horizontal layout">
+       <img class="avatar" src="https://pbs.twimg.com/profile_images/516953365402505216/i76BUAyb.jpeg"></img>
+       <div class="vertical layout">
+        <div class="paper-font-body2 gris"><span>kingflurkel</span> - 2 hours ago</div>
+        <div class="flex">Lorem ipsum sit dolor et amet</div>
+        <div class="">reply thumbs up thumbs down</div>
+      </div>
+    </div>
+    
+
   </template>
   <script>
   (function() {
     'use strict';
 
     Polymer({
-      is: 'stube-player',
+      is: 'comment-item',
 
       properties: {
-        hash: {
+        foo: {
           type: String,
-          value: 'stube-player',
+          value: 'comment-item',
           notify: true
         }
       }

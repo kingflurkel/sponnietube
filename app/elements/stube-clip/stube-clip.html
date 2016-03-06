@@ -40,6 +40,18 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       <div></div>
     </paper-material>
 
+    <paper-material elevation="1">
+    <comment-input></comment-input>
+    </paper-material>
+
+    <paper-material elevation="1">
+      <!-- <template is="dom-repeat"> -->
+      <comment-item></comment-item>
+      <comment-item></comment-item>
+      <comment-item></comment-item>
+    <!-- </template> -->
+    </paper-material>
+
   </template>
   <script>
   (function() {
@@ -51,7 +63,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       properties: {
         title: {
           type: String,
-          value: 'Why ABS sucks',
+          value: '10 most likely',
           notify: true
         },
         descr: {
@@ -61,7 +73,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         },
         username: {
           type: String,
-          value: 'kingflurkel',
+          value: 'LeelooStyleX',
           notify: true
         },
         views: {
