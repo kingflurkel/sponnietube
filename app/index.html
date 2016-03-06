@@ -103,7 +103,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
           <!-- Toolbar icons -->
           <paper-icon-button on-tap="upload" icon="cloud-upload"></paper-icon-button>
-          <paper-icon-button icon="search"></paper-icon-button>
+          <paper-icon-button icon="search" on-tap="searchToggle"></paper-icon-button>
           <paper-icon-button icon="settings"></paper-icon-button>
           
 
@@ -116,7 +116,16 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
         <!-- Main Content -->
         <div class="content">
+
+
+        <template is="dom-if" if="{{search}}">
+              <paper-input label="search"></paper-input>
+          </template>
+
+
           <iron-pages attr-for-selected="data-route" selected="{{route}}">
+
+          
 
             <section data-route="home">
             <paper-material elevation="1">
@@ -161,8 +170,6 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
             <section data-route="upload">
               <paper-material elevation="1">
               <ipfs-upload></ipfs-upload>
-                <h2 class="page-title">Upload</h2>
-                <p>This is the users section</p>
               </paper-material>
             </section>
 

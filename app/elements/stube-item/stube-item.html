@@ -48,7 +48,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     <div id="entry">
     <div class="paper-font-body3">{{title}}</div>
     <div class="paper-font-body1"><span>{{username}}</span></div>
-    <div class="paper-font-body1 gris"><span>{{duration}}</span> - <span>{{views}}</span> views</div>
+    <div class="paper-font-body1 gris"><span>{{duration}}</span> - <span>{{views}}</span> views
+    - <span>{{comments}}</span> comments</div>
 
   </div>
   </div>
@@ -80,6 +81,10 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           views: {
             type: Number,
             value: 3120
+          },
+          comments: {
+            type: Number,
+            value: 2
           },
           thumb: {
             type: String,
