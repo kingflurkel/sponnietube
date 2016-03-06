@@ -12,3 +12,9 @@ body {
   font-family: 'Roboto', 'Helvetica Neue', Helvetica, Arial, sans-serif;
   color: #333;
 }
+
+.avatar {
+        width: 30px;
+        height: 30px;
+        border-radius: 50%;
+      }

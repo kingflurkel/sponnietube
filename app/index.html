@@ -104,8 +104,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           <!-- Toolbar icons -->
           <paper-icon-button on-tap="upload" icon="cloud-upload"></paper-icon-button>
           <paper-icon-button icon="search" on-tap="searchToggle"></paper-icon-button>
-          <paper-icon-button icon="settings"></paper-icon-button>
-          
+          <img class="avatar" src="https://pbs.twimg.com/profile_images/516953365402505216/i76BUAyb.jpeg"></img>
 
           <!-- Application name -->
           <div class="middle middle-container center horizontal layout">
@@ -145,7 +144,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
               </paper-material>
 
               <paper-material elevation="1">
-                <h1 class="paper-font-headline">Series</h1>
+                <h1 class="paper-font-headline">Eastbound & Down</h1>
          
                 <stube-item 
                   title="Why I will never print in ABS again" 
@@ -174,7 +173,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
             </section>
 
             <section data-route="clip">
-              <stube-clip hash="{{params.hash}}"></stube-clip>
+              <stube-clip ipfsobject="{{params.hash}}"></stube-clip>
             </section>
 
             <section data-route="contact">

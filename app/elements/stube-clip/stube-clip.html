@@ -10,6 +10,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
 <link rel="import" href="../../bower_components/polymer/polymer.html">
 <link rel="import" href="../../bower_components/paper-icon-button/paper-icon-button.html">
+<link rel="import" href="../../bower_components/iron-ajax/iron-ajax.html">
 
 
 <dom-module id="stube-clip">
@@ -28,6 +29,10 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     }
 
     </style>
+    <iron-ajax
+      id="ajax"
+       handle-as="json"
+       on-response="handleResponse"></iron-ajax>
     <stube-player hash=""></stube-player>
     <paper-material elevation="1">
       <div class="horizontal layout">
@@ -36,6 +41,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       <p class="paper-font-body2 gris">{{likes}}</p>
     </div>
       <div class="paper-font-body2 gris"><span>{{username}}</span> - <span>{{views}}</span> views</div>
+
+      <div class="paper-font-body1">{{ipfsobject}}</div>
       <div class="paper-font-body1">{{descr}}</div>
       <div></div>
     </paper-material>
@@ -66,30 +73,52 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       is: 'stube-clip',
 
       properties: {
+        ipfsobject: {
+          type: String,
+          value: '',
+          observer: '_ipfsobject'
+        },
         title: {
           type: String,
-          value: '10 most likely',
+          value: 'Loading',
           notify: true
         },
         descr: {
           type: String,
-          value: 'Every night I try to print in ABS but it never works like it should. Every night I try to print in ABS but it never works like it should. Every night I try to print in ABS but it never works like it should.',
+          value: 'Loading',
           notify: true
         },
         username: {
           type: String,
-          value: 'LeelooStyleX',
+          value: 'Loading',
           notify: true
         },
         views: {
           type: Number,
-          value: 1233
+          value: 0
         },
         likes: {
           type: Number,
-          value: 12
+          value: 0
         }
 
+      },
+
+      _ipfsobject: function(){
+        console.log(this.ipfsobject);
+        this.$.ajax.url = "//gateway.ipfs.io/ipfs/"+this.ipfsobject;
+        this.$.ajax.generateRequest();
+      },
+
+      handleResponse: function(e){
+        if(this.$.ajax.lastResponse){
+          console.log("Response: ", this.$.ajax.lastResponse);
+          var ipfs = this.$.ajax.lastResponse;
+          this.title = ipfs.name;
+          this.descr = ipfs.description;
+          this.duration = ipfs.duration;
+          this.videosrc = ipfs.hash;
+        }
       }
     });
   })();
