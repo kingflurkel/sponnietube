@@ -9,6 +9,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 -->
 <link rel="import" href="../../bower_components/polymer/polymer.html">
 <link rel="import" href="../../bower_components/paper-material/paper-material.html">
+<link rel="import" href="../../bower_components/iron-ajax/iron-ajax.html">
 
 <dom-module id="stube-item">
   <template>
@@ -40,6 +41,10 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       color: --google-grey-100;
     }
     </style>
+    <iron-ajax
+      id="ajax"
+       handle-as="json"
+       on-response="handleResponse"></iron-ajax>
     <div class="container">
 
     <img src="{{thumb}}" />
@@ -47,10 +52,9 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
     <div id="entry">
     <div class="paper-font-body3">{{title}}</div>
-    <div class="paper-font-body1"><span>{{username}}</span></div>
     <div class="paper-font-body1 gris"><span>{{duration}}</span> - <span>{{views}}</span> views
     - <span>{{comments}}</span> comments</div>
-
+    <div class="paper-font-body1">{{description}}</div>
   </div>
   </div>
    
@@ -70,12 +74,12 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         properties: {
           title: {
             type: String,
-            value: 'BITCOIN VS. ETHEREUM EXPLAINED FOR NOOBZ + Why MICROSOFT Likes It',
+            value: 'Loading ipfs',
             notify: true
           },
-          username: {
+          description: {
             type: String,
-            value: 'kingflurkel',
+            value: 'Loading ipfs',
             notify: true
           },
           views: {
@@ -88,21 +92,40 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           },
           thumb: {
             type: String,
-            value: "https://ipfs.pics/ipfs/QmXRAfpjvqrYfUjqGdsAmzPtai6xW13FG9QcXcb84NjpDX"
+            value: ""
           },
           duration: {
             type: Number,
             value: 1200
           },
           hash: {
-            type: String
+            type: String,
+            observer: '_ipfsobject'
           }
         },
         hitMe: function(){
           //this.fire('go', { msg: "/clip/hash1" });
           //location ="/clip/hash1";
-          page("/clip/hash");
+          page("/clip/"+this.hash);
+        },
+
+        _ipfsobject: function(){
+        console.log('Got something '+this.hash);
+        this.$.ajax.url = "//localhost:8080/ipfs/"+this.hash;
+        this.$.ajax.generateRequest();
+      },
+
+      handleResponse: function(e){
+        if(this.$.ajax.lastResponse){
+          console.log("Response: ", this.$.ajax.lastResponse);
+          var ipfs = this.$.ajax.lastResponse;
+          this.title = ipfs.name;
+          this.description = ipfs.description;
+          this.duration = ipfs.duration;
+          this.videosrc = ipfs.video;
+          this.thumb = "//localhost:8080/ipfs/"+ipfs.thumb;
         }
+      }
       });
     })();
   </script>

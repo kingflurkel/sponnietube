@@ -106,7 +106,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
       _ipfsobject: function(){
         console.log(this.ipfsobject);
-        this.$.ajax.url = "//gateway.ipfs.io/ipfs/"+this.ipfsobject;
+        this.$.ajax.url = "//localhost:8080/ipfs/"+this.ipfsobject;
         this.$.ajax.generateRequest();
       },
 
@@ -117,7 +117,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           this.title = ipfs.name;
           this.descr = ipfs.description;
           this.duration = ipfs.duration;
-          this.videosrc = ipfs.hash;
+          this.videosrc = ipfs.video;
+          this.thumb = ipfs.thumb;
         }
       }
     });
