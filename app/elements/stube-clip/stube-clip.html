@@ -106,13 +106,13 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
       _ipfsobject: function(){
         console.log(this.ipfsobject);
-        this.$.ajax.url = "//gateway.ipfs.io/ipfs/"+this.ipfsobject;
+        this.$.ajax.url = '//gateway.ipfs.io/ipfs/'+this.ipfsobject;
         this.$.ajax.generateRequest();
       },
 
-      handleResponse: function(e){
+      handleResponse: function(){
         if(this.$.ajax.lastResponse){
-          console.log("Response: ", this.$.ajax.lastResponse);
+          console.log('Response: ', this.$.ajax.lastResponse);
           var ipfs = this.$.ajax.lastResponse;
           this.title = ipfs.name;
           this.descr = ipfs.description;
