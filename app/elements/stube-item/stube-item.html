@@ -92,7 +92,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           },
           thumb: {
             type: String,
-            value: ""
+            value: ''
 
           },
           duration: {
@@ -108,24 +108,24 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           //this.fire('go', { msg: "/clip/hash1" });
           //location ="/clip/hash1";
 
-          page("/clip/"+this.hash);
+          page('/clip/'+this.hash);
         },
 
         _ipfsobject: function(){
         console.log('Got something '+this.hash);
-        this.$.ajax.url = "//localhost:8080/ipfs/"+this.hash;
+        this.$.ajax.url = '//localhost:8080/ipfs/'+this.hash;
         this.$.ajax.generateRequest();
       },
 
-      handleResponse: function(e){
+      handleResponse: function(){
         if(this.$.ajax.lastResponse){
-          console.log("Response: ", this.$.ajax.lastResponse);
+          console.log('Response: ', this.$.ajax.lastResponse);
           var ipfs = this.$.ajax.lastResponse;
           this.title = ipfs.name;
           this.description = ipfs.description;
           this.duration = ipfs.duration;
           this.videosrc = ipfs.video;
-          this.thumb = "//localhost:8080/ipfs/"+ipfs.thumb;
+          this.thumb = '//localhost:8080/ipfs/'+ipfs.thumb;
         }
       }
       });
