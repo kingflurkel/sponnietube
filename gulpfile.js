@@ -286,13 +286,18 @@ gulp.task('serve:dist', ['default'], function() {
 });
 
 // deploy to bitballoon
-gulp.task('deploy'/*, ['default']*/, function() {
+gulp.task('deploy', ['default'], function() {
 
   env({
-    file: '.env.json',
+    file: 'env.json',
   });
 
-  console.log('AT=',process.env.BB_ACCESSTOKEN);
+  if (!process.env.BB_ACCESSTOKEN){
+    console.log('to deploy create a env.json file (see env.json.sample)');
+    process.exit();
+  }
+
+  console.log('AT=', process.env.BB_ACCESSTOKEN);
 
   bb.deploy({
     access_token: process.env.BB_ACCESSTOKEN,
