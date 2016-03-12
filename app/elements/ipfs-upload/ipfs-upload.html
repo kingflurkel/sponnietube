@@ -11,6 +11,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 <link rel="import" href="../../bower_components/polymer/polymer.html">
 <link rel="import" href="../../bower_components/file-upload/file-upload.html">
 <link rel="import" href="../../bower_components/paper-toggle-button/paper-toggle-button.html">
+<link rel="import" href="../../bower_components/ipfs-upload/ipfs-upload.html">
 
 <dom-module id="ipfs-upload">
   <template>
@@ -30,10 +31,11 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     </style>
     <div>
       <div class="horizontal layout center-center uploadPlane">
-        <file-upload target="">
+        <!-- <file-upload target="">
           <img class="cloud" src="upload-cloud.svg" />
           <h2 class="page-title">Choose file</h2>
-        </file-upload>
+        </file-upload> -->
+        <ipfs-upload></ipfs-upload>
       </div>
       <paper-input label="Title"></paper-input>
       <paper-input label="Description"></paper-input>
