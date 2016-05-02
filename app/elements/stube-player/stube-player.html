@@ -18,10 +18,14 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       }
       video {
         width: 100%;
-      }
+        height: 400px;
+        }
 
     </style>
-    <video src="//gateway.ipfs.io/ipfs/QmQ8kBZKJ174924XpLZymSvuz4TSRQ69Aungy9wVeUuL8i" controls></video>
+    <template is="dom-if" if="{{videourl}}">
+     
+      <video src="{{videourl}}" controls></video>
+    </template>
   </template>
   <script>
   (function() {
@@ -33,9 +37,25 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       properties: {
         hash: {
           type: String,
-          value: 'stube-player',
+          //value: 'stube-player',
+          notify: true,
+          observer: "_hash"
+        },
+        videourl: {
+          type: String,
+          //value: 'http://localhost:8080/ipfs/QmXXt9LuiFitta17aDxXztcTvVacEb8nfSt2V8mpCihnBa',
           notify: true
         }
+      },
+
+      attached: function() {
+        console.log('hash=',this.hash);
+      },
+
+      _hash: function(){
+        console.log('player got hash' , this.hash);
+        this.set('videourl',"http://localhost:8080/ipfs/" + this.hash);
+        console.log('video URL',this.videourl);
       }
     });
   })();

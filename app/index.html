@@ -98,7 +98,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
         <!-- Main Toolbar -->
         <paper-toolbar id="mainToolbar">
-        <iron-icon id="paperToggle" icon="av:video-library" paper-drawer-toggle></iron-icon>
+          <iron-icon id="paperToggle" icon="av:video-library" paper-drawer-toggle></iron-icon>
           <span class="flex"></span>
 
           <!-- Toolbar icons -->
@@ -106,85 +106,82 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           <paper-icon-button icon="search" on-tap="searchToggle"></paper-icon-button>
           <img class="avatar" src="https://pbs.twimg.com/profile_images/516953365402505216/i76BUAyb.jpeg"></img>
 
-          <!-- Application name -->
-          <div class="middle middle-container center horizontal layout">
-            <div class="app-name">Trube</div>
-          </div>
+        <!-- Application name -->
+        <div class="middle middle-container center horizontal layout">
+          <div class="app-name">Trube</div>
+        </div>
 
-        </paper-toolbar>
+      </paper-toolbar>
 
-        <!-- Main Content -->
-        <div class="content">
-
+      <!-- Main Content -->
+      <div class="content">
 
         <template is="dom-if" if="{{search}}">
-              <paper-input label="search"></paper-input>
-          </template>
+          <paper-input label="search"></paper-input>
+        </template>
 
-          <iron-pages attr-for-selected="data-route" selected="{{route}}">
+        <iron-pages attr-for-selected="data-route" selected="{{route}}">
 
-            <section data-route="home">
+          <section data-route="home">
             <paper-material elevation="1">
-                <h1 class="paper-font-headline">Since you were gone</h1>
-         
-                <stube-item 
-                  hash="QmdRMCUUCBmFAMwmh9Hz8v2MignXsjJTzZCj66EsTVq1gg"></stube-item>
-        
-                <stube-item></stube-item>
-                <stube-item></stube-item>
-                <stube-item></stube-item>
-              </paper-material>
+              <h1 class="paper-font-headline">Channel Sponnet</h1>
 
-              <paper-material elevation="1">
-                <h1 class="paper-font-headline">Eastbound & Down</h1>
-         
-                <stube-item 
+              <stube-item hash="QmQVF7KXpbLgLG9jobhSKbxyX3H4nqTmH8rXXvF7zbDCDw"></stube-item>
+<!-- 
+              <stube-item></stube-item>
+              <stube-item></stube-item>
+              <stube-item></stube-item> -->
+            </paper-material>
+<!--
+            <paper-material elevation="1">
+              <h1 class="paper-font-headline">Eastbound & Down</h1>
+
+              <stube-item 
                   title="Why I will never print in ABS again" 
                   username="sponnet" 
                   views="10"
                   duration="1220"
                   thumb="https://ipfs.pics/ipfs/QmaUgEvmkSrCabEJPd8q4pHoAXRT5gBjM5WbS4sGmS4orQ"
                   ></stube-item>
-        
-                <stube-item></stube-item>
-                <stube-item></stube-item>
-                <stube-item></stube-item>
-              </paper-material>
 
-                
-              <paper-material elevation="1">
-                <p class="paper-font-body2 horizontal layout center-center">+ load more</p>
-              </paper-material>
+              <stube-item></stube-item>
+              <stube-item></stube-item>
+              <stube-item></stube-item>
+            </paper-material>
+-->
+            <paper-material elevation="1">
+              <p class="paper-font-body2 horizontal layout center-center">+ load more</p>
+            </paper-material>
 
-            </section>
-
-            <section data-route="upload">
-              <paper-material elevation="1">
+          </section>
+<!-- 
+          <section data-route="upload">
+            <paper-material elevation="1">
               <ipfs-upload></ipfs-upload>
-              </paper-material>
-            </section>
+            </paper-material>
+          </section> -->
 
-            <section data-route="clip">
-              <stube-clip ipfsobject="{{params.hash}}"></stube-clip>
-            </section>
+<!--           <section data-route="clip">
+            <stube-clip ipfsobject="{{params.hash}}"></stube-clip>
+          </section>
 
-            <section data-route="contact">
-              <paper-material elevation="1">
-                <h2 class="page-title">Contact</h2>
-                <p>This is the contact section</p>
-              </paper-material>
-            </section>
+          <section data-route="contact">
+            <paper-material elevation="1">
+              <h2 class="page-title">Contact</h2>
+              <p>This is the contact section</p>
+            </paper-material>
+          </section>
+ -->
+        </iron-pages>
+      </div>
+    </paper-scroll-header-panel>
+  </paper-drawer-panel>
 
-          </iron-pages>
-        </div>
-      </paper-scroll-header-panel>
-    </paper-drawer-panel>
+</template>
 
-  </template>
-
-  <!-- build:js scripts/app.js -->
-  <script src="scripts/app.js"></script>
-  <!-- endbuild-->
+<!-- build:js scripts/app.js -->
+<script src="scripts/app.js"></script>
+<!-- endbuild-->
 </body>
 
 </html>

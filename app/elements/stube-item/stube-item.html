@@ -41,23 +41,30 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       color: --google-grey-100;
     }
     </style>
-    <iron-ajax
+    <iron-ajax auto
       id="ajax"
        handle-as="json"
        on-response="handleResponse"></iron-ajax>
     <div class="container">
 
-    <img src="{{thumb}}" />
-    
+        <stube-player hash="{{videohash}}"></stube-player>
 
-    <div id="entry">
-    <div class="paper-font-body3">{{title}}</div>
-    <div class="paper-font-body1 gris"><span>{{duration}}</span> - <span>{{views}}</span> views
-    - <span>{{comments}}</span> comments</div>
-    <div class="paper-font-body1">{{description}}</div>
-  </div>
-  </div>
-   
+      <div id="entry">
+        <div class="paper-font-body3">{{title}}</div>
+        <div class="paper-font-body1 gris">
+          <span>{{duration}}</span>
+          -
+          <span>{{views}}</span>
+          views
+    -
+          <span>{{comments}}</span>
+          comments
+        </div>
+        <div class="paper-font-body1">{{description}}</div>
+
+      </div>
+    </div>
+
   </template>
 
   <script>
@@ -101,7 +108,11 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           },
           hash: {
             type: String,
-            observer: '_ipfsobject'
+          },
+          videohash: {
+            type: String,
+            notify:true
+
           }
         },
         hitMe: function(){
@@ -111,21 +122,25 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           page('/clip/'+this.hash);
         },
 
-        _ipfsobject: function(){
-        console.log('Got something '+this.hash);
-        this.$.ajax.url = '//localhost:8080/ipfs/'+this.hash;
-        this.$.ajax.generateRequest();
+    
+      attached: function(){
+        this.$.ajax.url = 'https://gateway.ipfs.io/ipfs/'+this.hash;
+        console.log('requesting URL',this.$.ajax.url);
+        //this.$.ajax.url = 'http://localhost:8080/ipfs/'+this.hash;
+        //this.$.ajax.generateRequest();
+
       },
 
       handleResponse: function(){
         if(this.$.ajax.lastResponse){
-          console.log('Response: ', this.$.ajax.lastResponse);
+          console.log('Received response: ', this.$.ajax.lastResponse);
           var ipfs = this.$.ajax.lastResponse;
-          this.title = ipfs.name;
+          this.title = ipfs.title;
           this.description = ipfs.description;
           this.duration = ipfs.duration;
-          this.videosrc = ipfs.video;
-          this.thumb = '//localhost:8080/ipfs/'+ipfs.thumb;
+          this.set('videohash',ipfs.hash);
+//          this.videohash = ipfs.hash;
+//          this.thumb = '//localhost:8080/ipfs/'+ipfs.thumb;
         }
       }
       });
