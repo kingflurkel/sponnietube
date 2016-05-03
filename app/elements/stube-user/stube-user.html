@@ -17,7 +17,10 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         display: block;
       }
     </style>
-    <div>Hello from <span>{{foo}}</span></div>
+    <h1>Hi user!</h1>
+    <p>{{account}}</p>
+    <p>Eth: <span>{{balance}}</span></p>
+    <p>BTCoin: <span>{{BTCoinBalance}}</span></p>
   </template>
   <script>
   (function() {
@@ -27,12 +30,31 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       is: 'stube-user',
 
       properties: {
-        foo: {
-          type: String,
-          value: 'stube-user',
-          notify: true
+        web3: {
+          type: Object,
+          observer: '_web3'
+        },
+        account: {
+          type: String
+        },
+        balance: {
         }
-      }
+      },
+
+      _web3: function(){
+        var web3wallet = document.getElementById('web3wallet');
+        this.balance = web3wallet.updateBalance();
+      },
+
+      getBTCoinBalance: function(){
+        // not ready yet, copy paste
+      var MyCoinContract = this.web3.eth.contract(this.coincontractabi);
+      var myCoinContractInstance = MyCoinContract.at('0x53F6E368f4a99c5b717EfF80c7f8175E0e45C0cC');
+      var account = this.fixaddress(this.account);
+      var coinbalance = myCoinContractInstance.balanceOf(account).toNumber();
+      //console.log(this.account, ' current localcoin balance: ', coinbalance);
+      this.BTCoinBalance = coinbalance/100;
+    },
     });
   })();
   </script>
