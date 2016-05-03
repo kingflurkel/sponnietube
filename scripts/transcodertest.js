@@ -13,7 +13,7 @@ function transcode(filename,cb) {
                 .setVideoSize('50%')
 //                .setVideoCodec('mpeg4')
                 .setVideoFormat('avi')
-                .setVideoBitRate('1K')
+//                .setVideoBitRate('512K')
                 //        .setAudioCodec('flv1')
                 //        .setAudioChannels(2)
                 .save('./b.avi', function(error, file) {

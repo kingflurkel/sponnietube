@@ -22,9 +22,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         }
 
     </style>
-    <template is="dom-if" if="{{videourl}}">
-      <video src="{{videourl}}" controls></video>
-    </template>
+    <video src="{{videourl}}" controls></video>
   </template>
   <script>
   (function() {
@@ -34,7 +32,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       is: 'stube-player',
 
       properties: {
-        hash: {
+        videohash: {
           type: String,
           //value: 'stube-player',
           //notify: true,
@@ -42,18 +40,17 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         },
         videourl: {
           type: String,
-          //value: 'http://localhost:8080/ipfs/QmXXt9LuiFitta17aDxXztcTvVacEb8nfSt2V8mpCihnBa',
           notify: true
         }
       },
 
       attached: function() {
-        //console.log('hash=',this.hash);
+        console.log('hash=',this.videohash);
       },
 
       _hash: function(){
-        console.log('player got hash' , this.hash);
-        this.videourl = "http://gateway.ipfs.io/ipfs/" + this.hash;
+        console.log('player got hash' , this.videohash);
+        this.videourl = "http://gateway.ipfs.io/ipfs/" + this.videohash;
         console.log('video URL',this.videourl);
       }
     });

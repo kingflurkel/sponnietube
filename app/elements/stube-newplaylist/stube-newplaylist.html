@@ -43,6 +43,17 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         });
       },
 
+      fixaddress: function(address) {
+        function strStartsWith(str, prefix) {
+          return str.indexOf(prefix) === 0;
+        }
+
+        if (!strStartsWith(address, '0x')) {
+          return ('0x' + address);
+        }
+        return address;
+      },
+
       _createNewPlaylistContract: function(playlistname, fn) {
         this.fire('add-toast', { msg: 'Creating playlist...' });
         var self = this;
@@ -57,11 +68,10 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
             var MyContract = self.web3.eth.contract(self.contractjson.abi);
             var contractInstance = MyContract.new(self.playlistname,{
-              from: '0x'+self.account,
+              from: self.fixaddress(self.account),
               gasPrice: gasPrice,
               gasLimit: 3000000,
               gas: 2000000,
-              nonce: 4,
               data: self.contractjson.bytecode
             }, function(err, myContract) {
               if (!err) {

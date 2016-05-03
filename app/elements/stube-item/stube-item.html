@@ -44,9 +44,10 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
    
     <div class="container">
 
-    <template>
-        <stube-player hash="{{videohash}}"></stube-player>
-    </template>
+
+    <stube-player videohash="{{videohash}}"></stube-player>
+
+
 
       <div id="entry">
         <div class="paper-font-body3">{{title}}</div>
@@ -148,6 +149,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                 self.description = ipfsData.description;
                 self.duration = ipfsData.duration;
                 self.videohash = ipfsData.hash;
+                self.videourl = ""
               });
           });
 
