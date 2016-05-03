@@ -63,7 +63,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
   <span id="browser-sync-binding"></span>
   <template is="dom-bind" id="app">
 
-    <web3-wallet password="michael" host="http://kingflurkel.dtdns.net:8545"></web3-wallet>
+    <web3-wallet id="web3wallet" keystore="{{keystore}}" walletname="blocktube-demo" password="test" web3="{{web3}}" host="{{host}}"  balance="{{balance}}" account="{{account}}"></web3-wallet>
 
     <paper-drawer-panel id="paperDrawerPanel">
       <!-- Drawer Scroll Header Panel -->
@@ -102,9 +102,9 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           <span class="flex"></span>
 
           <!-- Toolbar icons -->
-          <paper-icon-button on-tap="upload" icon="cloud-upload"></paper-icon-button>
-          <paper-icon-button icon="search" on-tap="searchToggle"></paper-icon-button>
-          <img class="avatar" src="https://pbs.twimg.com/profile_images/516953365402505216/i76BUAyb.jpeg"></img>
+          <a href="/newplaylist"><paper-icon-button on-tap="add" icon="add"></paper-icon-button></a>
+          <!-- <paper-icon-button icon="search" on-tap="searchToggle"></paper-icon-button> -->
+          <a href="/user"><img class="avatar" src="https://pbs.twimg.com/profile_images/516953365402505216/i76BUAyb.jpeg"></img></a>
 
         <!-- Application name -->
         <div class="middle middle-container center horizontal layout">
@@ -126,7 +126,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
             <paper-material elevation="1">
               <h1 class="paper-font-headline">Channel Sponnet</h1>
 
-              <stube-item hash="QmQVF7KXpbLgLG9jobhSKbxyX3H4nqTmH8rXXvF7zbDCDw"></stube-item>
+              <stube-item hash="QmUd3MWBYQBdYotfeLD2GG87NHd1oduVpuFSdQrLMJoKBd"></stube-item>
 <!-- 
               <stube-item></stube-item>
               <stube-item></stube-item>
@@ -172,6 +172,19 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
             </paper-material>
           </section>
  -->
+
+<section data-route="newplaylist">
+            <paper-material elevation="1">
+            <stube-newplaylist web3="{{web3}}"></stube-newplaylist>
+            </paper-material>
+          </section>
+
+ <section data-route="user">
+            <paper-material elevation="1">
+              <h2 class="page-title">User</h2>
+              <p>{{account}}</p>
+            </paper-material>
+          </section>
         </iron-pages>
       </div>
     </paper-scroll-header-panel>

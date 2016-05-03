@@ -18,3 +18,8 @@ body {
         height: 30px;
         border-radius: 50%;
       }
+
+      a {
+  color: inherit; /* blue colors for links too */
+  text-decoration: inherit; /* no underline */
+}
