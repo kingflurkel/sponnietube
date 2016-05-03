@@ -2,6 +2,8 @@ var ffmpeg = require('ffmpeg');
 var fs = require('fs');
 var ipfsAPI = require('ipfs-api')
 
+var ipfsnode = '/ip4/10.0.5.38/tcp/5001';
+
 function transcode(filename) {
     try {
         var process = new ffmpeg(filename);
@@ -39,7 +41,7 @@ function upload(filename) {
     var filestream = fs.createReadStream(filename, {
         bufferSize: 128
     })
-    var ipfs = ipfsAPI('/ip4/127.0.0.1/tcp/5001');
+    var ipfs = ipfsAPI(ipfsnode);
     ipfs.add(filestream, (err, res) => {
         if (err) {
             console.log(err);
