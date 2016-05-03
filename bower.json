@@ -12,5 +12,8 @@
     "file-upload": "~1.6.3",
     "ipfs-upload": "sponnet/ipfs-upload"
   },
-  "devDependencies": {}
+  "devDependencies": {},
+  "resolutions": {
+    "js-ipfs-api": "^2.13.2"
+  }
 }
