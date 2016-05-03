@@ -105,7 +105,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
           <!-- Toolbar icons -->
           <a href="/newplaylist"><paper-icon-button on-tap="add" icon="add"></paper-icon-button></a>
-          <!-- <paper-icon-button icon="search" on-tap="searchToggle"></paper-icon-button> -->
+          <a href="/upload"><paper-icon-button icon="cloud-upload" on-tap="searchToggle"></paper-icon-button></a>
           <a href="/user"><img class="avatar" src="https://pbs.twimg.com/profile_images/516953365402505216/i76BUAyb.jpeg"></img></a>
 
         <!-- Application name -->
@@ -156,12 +156,12 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
             </paper-material>
 
           </section>
-<!-- 
+
           <section data-route="upload">
             <paper-material elevation="1">
               <ipfs-upload></ipfs-upload>
             </paper-material>
-          </section> -->
+          </section>
 
 <!--           <section data-route="clip">
             <stube-clip ipfsobject="{{params.hash}}"></stube-clip>
