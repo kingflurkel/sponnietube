@@ -36,6 +36,67 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         }
       },
 
+      savePlaylist: function(){
+        //deploy playlist with title. 
+        this._createNewPlaylistContract(this.playlistname, function(e){
+          console.log(e);
+        });
+      },
+
+      _createNewPlaylistContract: function(playlistname, fn) {
+        this.fire('add-toast', { msg: 'Creating playlist...' });
+        var self = this;
+        this.contracturl = this.resolveUrl('../../contracts/playlist.json');
+        this.importHref(this.contracturl, function(e) {
+          self.contractjson = JSON.parse(e.target.import.body.innerText);
+
+          console.log('Creating new contract on account ', self.account);
+
+          this.web3.eth.getGasPrice(function(err, result) {
+            var gasPrice = result.toNumber(10);
+
+            var MyContract = self.web3.eth.contract(self.contractjson.abi);
+            var contractInstance = MyContract.new(self.playlistname,{
+              from: '0x'+self.account,
+              gasPrice: gasPrice,
+              gasLimit: 3000000,
+              gas: 2000000,
+              nonce: 4,
+              data: self.contractjson.bytecode
+            }, function(err, myContract) {
+              if (!err) {
+                // NOTE: The callback will fire twice!
+                // Once the contract has the transactionHash property set and once its deployed on an address.
+
+                // e.g. check tx hash on the first call (transaction send)
+                if (!myContract.address) {
+                  console.log("Your playlist contract has been deployed to the Ethereum network. Transaction hash is", myContract.transactionHash);
+                  self.txhash = myContract.transactionHash;
+                  console.log("Wait a new moments while we mine it. You will receive your address when it is mined.");
+                  //self.showtoast("Here's the TX hash: " + self.txhash);
+                  self.fire('add-toast', { msg: "Here's the TX hash: " + self.txhash });
+
+                  // check address on the second call (contract deployed)
+                } else {
+                  console.log("Your playlist contract has been deployed. Your contract address is", myContract.address);
+                  self.contractaddress = myContract.address;
+                  //self.showtoast("Contract deployed: " + self.contractaddress);
+                  self.fire('add-toast', { msg: "Contract deployed: " + self.contractaddress });
+                  fn(self.contractaddress);
+                }
+              } else {
+                console.log('error:', err);
+                //self.showtoast("Error: " + err);
+                self.fire('add-toast', { msg: "Error." });
+              }
+            });
+          });
+
+        }, function(e) {
+          console.log('ERROR!');
+        });
+
+      },
 
     });
   })();
