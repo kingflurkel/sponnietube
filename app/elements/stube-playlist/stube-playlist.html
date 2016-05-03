@@ -9,21 +9,18 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 -->
 
 <link rel="import" href="../../bower_components/polymer/polymer.html">
+<link rel="import" href="../stube-clip/stube-clip.html">
 
-<dom-module id="stube-player">
+
+<dom-module id="stube-playlist">
   <template>
     <style>
       :host {
         display: block;
       }
-      video {
-        width: 100%;
-        height: 400px;
-        }
-
     </style>
-    <template is="dom-if" if="{{videourl}}">
-      <video src="{{videourl}}" controls></video>
+    <template is="dom-repeat" items="{{clips}}">
+      <stube-item hash="QmUd3MWBYQBdYotfeLD2GG87NHd1oduVpuFSdQrLMJoKBd"></stube-item>
     </template>
   </template>
   <script>
@@ -31,30 +28,28 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     'use strict';
 
     Polymer({
-      is: 'stube-player',
+      is: 'stube-playlist',
 
       properties: {
-        hash: {
-          type: String,
-          //value: 'stube-player',
-          //notify: true,
-          observer: "_hash"
+        clips: {
+          type: Array,
+          observer: '_clips'
         },
-        videourl: {
-          type: String,
-          //value: 'http://localhost:8080/ipfs/QmXXt9LuiFitta17aDxXztcTvVacEb8nfSt2V8mpCihnBa',
-          notify: true
+
+        sorting: {
+          type: Boolean,
+          observer: '_sorting'
         }
       },
 
-      attached: function() {
-        //console.log('hash=',this.hash);
+      _clips: function(){
+
       },
 
-      _hash: function(){
-        console.log('player got hash' , this.hash);
-        this.videourl = "http://gateway.ipfs.io/ipfs/" + this.hash;
-        console.log('video URL',this.videourl);
+      _sorting: function(){
+        var cliparray = this.clips;
+        cliparray.reverse();
+        this.clips = cliparray;
       }
     });
   })();

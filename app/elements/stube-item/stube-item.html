@@ -107,6 +107,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           },
           hash: {
             type: String,
+            //observer: '_hash'
           },
           videohash: {
             type: String,
@@ -122,6 +123,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         },
 
     
+
         attached: function() {
 
           //this.$.ajax.url = 'https://gateway.ipfs.io/ipfs/' + this.hash;
@@ -149,9 +151,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
               });
           });
 
-        },
 
-    
+        },
       });
     })();
   </script>

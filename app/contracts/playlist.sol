@@ -6,8 +6,12 @@ contract blockPlaylist {
 	// We will store ipfs hashes here.
     string[] public clips;
     address owner;
+    string public playlistname;
 
-    function blockPlaylist() { owner = msg.sender; }
+    function blockPlaylist(string playlist) { 
+    	owner = msg.sender; 
+    	playlistname = playlist;
+    }
 
     // Fire the event clipUploaded(clipobject)
     // so our bot/gui can listen to it
