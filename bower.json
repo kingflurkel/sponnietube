@@ -10,8 +10,7 @@
     "page": "visionmedia/page.js#~1.6.3",
     "web3-wallet": "~0.0.2",
     "file-upload": "~1.6.3",
-    "ipfs-upload": "sponnet/ipfs-upload",
-    "js-ipfs-api": "https://github.com/ipfs/js-ipfs-api.git#^3.0.2"
+    "ipfs-upload": "sponnet/ipfs-upload"
   },
   "devDependencies": {}
 }
