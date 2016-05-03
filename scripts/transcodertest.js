@@ -4,7 +4,7 @@ var ipfsAPI = require('ipfs-api')
 
 var ipfsnode = '/ip4/10.0.5.38/tcp/5001';
 
-function transcode(filename) {
+function transcode(filename,cb) {
     try {
         var process = new ffmpeg(filename);
         process.then(function(video) {
@@ -13,7 +13,7 @@ function transcode(filename) {
                 .setVideoSize('50%')
 //                .setVideoCodec('mpeg4')
                 .setVideoFormat('avi')
-                .setVideoBitRate('370K')
+                .setVideoBitRate('1K')
                 //        .setAudioCodec('flv1')
                 //        .setAudioChannels(2)
                 .save('./b.avi', function(error, file) {
@@ -22,6 +22,7 @@ function transcode(filename) {
                     }
                     if (!error) {
                         console.log('Video file: ' + file);
+                        if (cb) cb();
                     }
                 });
 
@@ -34,8 +35,9 @@ function transcode(filename) {
     }
 }
 
-//transcode('a.avi');
-upload('./b.mp4');
+transcode('a.avi',function(){
+    upload('./b.avi');
+});
 
 function upload(filename) {
     var filestream = fs.createReadStream(filename, {

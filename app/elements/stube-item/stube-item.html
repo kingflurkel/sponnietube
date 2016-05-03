@@ -41,13 +41,12 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       color: --google-grey-100;
     }
     </style>
-    <iron-ajax auto
-      id="ajax"
-       handle-as="json"
-       on-response="handleResponse"></iron-ajax>
+   
     <div class="container">
 
+    <template>
         <stube-player hash="{{videohash}}"></stube-player>
+    </template>
 
       <div id="entry">
         <div class="paper-font-body3">{{title}}</div>
@@ -123,26 +122,36 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         },
 
     
-      attached: function(){
-        this.$.ajax.url = 'https://gateway.ipfs.io/ipfs/'+this.hash;
-        console.log('requesting URL',this.$.ajax.url);
-        //this.$.ajax.url = 'http://localhost:8080/ipfs/'+this.hash;
-        //this.$.ajax.generateRequest();
+        attached: function() {
 
-      },
+          //this.$.ajax.url = 'https://gateway.ipfs.io/ipfs/' + this.hash;
+          //console.log('requesting URL', this.$.ajax.url);
+          //this.$.ajax.url = 'http://localhost:8080/ipfs/'+this.hash;
+          //this.$.ajax.generateRequest();
+          var self = this;
+          var ipfs = window.ipfsAPI('gateway.ipfs.io',80);
 
-      handleResponse: function(){
-        if(this.$.ajax.lastResponse){
-          console.log('Received response: ', this.$.ajax.lastResponse);
-          var ipfs = this.$.ajax.lastResponse;
-          this.title = ipfs.title;
-          this.description = ipfs.description;
-          this.duration = ipfs.duration;
-          this.set('videohash',ipfs.hash);
-//          this.videohash = ipfs.hash;
-//          this.thumb = '//localhost:8080/ipfs/'+ipfs.thumb;
-        }
-      }
+          var buf = '';
+          ipfs.cat(this.hash, function(err, res) {
+            res
+              .on('error', function(err) {
+                throw err
+              })
+              .on('data', function(data) {
+                buf += data
+              })
+              .on('end', function() {
+                var ipfsData = JSON.parse(buf);
+                self.title = ipfsData.title;
+                self.description = ipfsData.description;
+                self.duration = ipfsData.duration;
+                self.videohash = ipfsData.hash;
+              });
+          });
+
+        },
+
+    
       });
     })();
   </script>
