@@ -2,25 +2,25 @@
 
 contract blockPlaylist {
     
-    struct Clip
-    {
-        uint duration; // duration
-        bool visible;  // if true, anyone can see the clip
-        bytes32 title; // the clip's title
-        bytes32 description;   // the description
-        address op; // account of the uploader
-    }
+	// Here we create an array named 'clips'. 
+	// We will store ipfs hashes here.
+    string[] public clips;
+    address owner;
 
-    Clip[] public clips;
+    function blockPlaylist() { owner = msg.sender; }
 
     // Fire the event clipUploaded(clipobject)
     // so our bot/gui can listen to it
-    event clipUploaded(clipobject);
+    event clipUploaded(string ipfshash);
 
-    // Add the clipobject to the clipcollection
-    function uploadClip(clipobject){
-    	clips[clipobject];
+    // Add the ipfshash to the clipcollection
+    function uploadClip(string ipfshash){
+    	// If the upload is the owner of this playlist
+    	if (msg.sender != owner)
+    		throw;	
+    	// push into clips array
+    	clips.push(ipfshash);
     	// fire an event we can listen to
-    	event clipUploaded(clipobject);
+    	clipUploaded(ipfshash);
     }
 }
