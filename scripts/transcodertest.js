@@ -35,9 +35,9 @@ function transcode(filename,cb) {
     }
 }
 
-transcode('a.avi',function(){
+//transcode('a.avi',function(){
     upload('./b.avi');
-});
+//});
 
 function upload(filename) {
     var filestream = fs.createReadStream(filename, {
