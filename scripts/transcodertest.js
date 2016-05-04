@@ -36,7 +36,7 @@ function transcode(filename,cb) {
 }
 
 //transcode('a.avi',function(){
-    upload('./b.avi');
+    upload('./c.mp4');
 //});
 
 function upload(filename) {

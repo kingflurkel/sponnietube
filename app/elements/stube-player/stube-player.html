@@ -36,7 +36,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           type: String,
           //value: 'QmR8NyktETUYryjL3ZecAGJtSYPup9CJqihxyJVXcHuLBu',
           //notify: true,
-          observer: "_hash"
+          observer: '_hash'
         },
         videourl: {
           type: String,
@@ -50,7 +50,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
       _hash: function(){
         console.log('player got hash' , this.videohash);
-        this.videourl = "http://gateway.ipfs.io/ipfs/" + this.videohash;
+        this.videourl = 'http://gateway.ipfs.io/ipfs/' + this.videohash;
         console.log('video URL',this.videourl);
       }
     });

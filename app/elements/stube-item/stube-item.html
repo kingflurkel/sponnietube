@@ -138,10 +138,10 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           ipfs.cat(this.hash, function(err, res) {
             res
               .on('error', function(err) {
-                throw err
+                throw(err);
               })
               .on('data', function(data) {
-                buf += data
+                buf += data;
               })
               .on('end', function() {
                 var ipfsData = JSON.parse(buf);
@@ -149,7 +149,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                 self.description = ipfsData.description;
                 self.duration = ipfsData.duration;
                 self.videohash = ipfsData.hash;
-                self.videourl = ""
+                self.videourl = '';
               });
           });
 
