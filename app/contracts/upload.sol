@@ -63,15 +63,15 @@ contract blocktubeClip {
     //event tresholdReached(likesBalance);
 
     // And now, the function that runs when deploying this contract.
-    function blocktubeClip(string _ipfsclipobject, uint _treshold, uint _clipshares, uint _percentageforowner){
+    function blocktubeClip(string _ipfsclipobject, uint _treshold, uint _percentageforowner){
         owner = msg.sender;
         treshold = _treshold;
-        clipshares = _clipshares;
+        clipshares = 100;
         ipfsclipobject = _ipfsclipobject;
         percentageforowner = _percentageforowner;
-        uint shares = _clipshares / _percentageforowner;
+        uint shares = _clipshares / 100 * _percentageforowner;
         //uint shares = 100;
-        shareholders[shareholders.length++] = Shareholder({addr: msg.sender, shares: shares});
+        shareholders[0] = Shareholder({addr: msg.sender, shares: shares});
         remainingCliptokens = _clipshares - shares;
         shareholdersnum = shareholders.length;
         //testnet blocktube contract
@@ -85,16 +85,14 @@ contract blocktubeClip {
         // add the msg.sender to shareholders, and give him the amount of
         // shares left / number of shareholders.
         if(shareholdersnum < treshold){
-            shareholdersnum = shareholders.length++;
-            shareholdersnum++;
-            uint shares = remainingCliptokens / shareholdersnum;
+            uint shares = remainingCliptokens / 2;
             shareholders[shareholders.length++] = Shareholder({addr: _liker, shares: shares});
             remainingCliptokens = remainingCliptokens - shares;
         } else {
             // When we have reached the treshold, the likeamount is spread over the shareholders.
             // We invoke the token contract's function 'transfer'
             for (var i = shareholders.length - 1; i >= 0; i--) {
-                Token.transfer(shareholders[i].addr, (_likeamount / shareholders[i].shares)); 
+                Token.transfer(shareholders[i].addr, (_likeamount / 100 * shareholders[i].shares)); 
             }
         }
     }
