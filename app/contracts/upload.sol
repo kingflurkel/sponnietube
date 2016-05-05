@@ -17,51 +17,65 @@
 */
 
 // we add the token contract so later, it knows what to do.
-contract token { function transfer(address receiver, uint amount){  } }
+contract token { 
+    function transfer(address receiver, uint amount){} 
+}
 
 contract blocktubeClip {
     
-	// First, we need to declare some variables used in this contract.
+    // First, we need to declare some variables used in this contract.
     // The address of the original poster
     address public owner;
 
     // The percentage of shares the original poster is willing to trade
     uint public treshold;
 
+    // The contract of the Blocktube token contract
+    token public Token;
+    
     // The address of the Blocktube token contract
-    uint public token;
+    address public tokenaddr;
 
     // The total supply of clipshares
     uint public clipshares;
+
+    // The total of shareholders
+    uint public shareholdersnum;
+
+    // How much shares the owner has
+    uint public percentageforowner;
+
+    // The remaining supply of clipshares
+    uint public remainingCliptokens;
 
     // Every clip has a json object, that's stored on IPFS.
     string public ipfsclipobject;
     
     // We have an array of 'funders', the early likes.
-    Shareholder[] public shareholders;
-    
+    Shareholder[] public shareholders;    
     // The shareholder object
     struct Shareholder {
         address addr;
         uint shares;
     }
 
-    // We have a boolean, crowdsaleClosed
-    bool tresholdReached = false;
-
-    // And of course, the array with likes / shares
-    mapping(address => uint256) public balanceOf;
-
     // Then we define some events, where our contraclistener can listen to.
     //event tresholdReached(likesBalance);
 
     // And now, the function that runs when deploying this contract.
-    function blocktubeClip(string _ipfsclipobject, uint _treshold, uint _clipshares){
+    function blocktubeClip(string _ipfsclipobject, uint _treshold, uint _clipshares, uint _percentageforowner){
         owner = msg.sender;
         treshold = _treshold;
         clipshares = _clipshares;
         ipfsclipobject = _ipfsclipobject;
-        tresholdReached = false;
+        percentageforowner = _percentageforowner;
+        uint shares = _clipshares / _percentageforowner;
+        //uint shares = 100;
+        shareholders[shareholders.length++] = Shareholder({addr: msg.sender, shares: shares});
+        remainingCliptokens = _clipshares - shares;
+        shareholdersnum = shareholders.length;
+        //testnet blocktube contract
+        tokenaddr = 0xc6305f2c2f05e691cD973B3bb610CA9AE9a30720;
     }
 
     // When someone sends a like token to this contract's balance in the token contract,
@@ -70,18 +84,23 @@ contract blocktubeClip {
         // When the current amount of shareholders is lower than the treshold,
         // add the msg.sender to shareholders, and give him the amount of
         // shares left / number of shareholders.
-        if(shareholders.length < treshold){
-            uint shares = remainingCliptokens / shareholders.length;
-            shareholders[shareholders.length++] = Shareholder[{addr: msg.sender, shares: shares}];
-            remainingCliptokens = remainingCliptokens - amount;
+        if(shareholdersnum < treshold){
+            shareholdersnum = shareholders.length++;
+            shareholdersnum++;
+            uint shares = remainingCliptokens / shareholdersnum;
+            shareholders[shareholders.length++] = Shareholder({addr: _liker, shares: shares});
+            remainingCliptokens = remainingCliptokens - shares;
         } else {
             // When we have reached the treshold, the likeamount is spread over the shareholders.
             // We invoke the token contract's function 'transfer'
             for (var i = shareholders.length - 1; i >= 0; i--) {
-                token.tranfer(_liker, _likeamount / shareholders[i].shares); 
+                Token.transfer(shareholders[i].addr, (_likeamount / shareholders[i].shares)); 
             }
         }
     }
+
+    // And because my mist wallet is getting full, we need a suicide function.
+    function kill() { if (msg.sender == owner) suicide(owner); }
 
 
 
