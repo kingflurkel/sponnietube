@@ -15,16 +15,16 @@ contract blockPlaylist {
 
     // Fire the event clipUploaded(clipobject)
     // so our bot/gui can listen to it
-    event clipUploaded(string ipfshash);
+    event clipAdded(string ipfshash);
 
     // Add the ipfshash to the clipcollection
-    function uploadClip(string ipfshash){
+    function addClip(string ipfshash){
     	// If the upload is the owner of this playlist
     	if (msg.sender != owner)
     		throw;	
     	// push into clips array
     	clips.push(ipfshash);
     	// fire an event we can listen to
-    	clipUploaded(ipfshash);
+    	clipAdded(ipfshash);
     }
 }
