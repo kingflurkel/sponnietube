@@ -36,9 +36,6 @@ contract blocktubeClip {
     // The address of the Blocktube token contract
     address public tokenaddr;
 
-    // The total supply of clipshares
-    uint public clipshares;
-
     // The total of shareholders
     uint public shareholdersnum;
 
@@ -66,13 +63,10 @@ contract blocktubeClip {
     function blocktubeClip(string _ipfsclipobject, uint _treshold, uint _percentageforowner){
         owner = msg.sender;
         treshold = _treshold;
-        clipshares = 100;
         ipfsclipobject = _ipfsclipobject;
         percentageforowner = _percentageforowner;
-        uint shares = _clipshares / 100 * _percentageforowner;
-        //uint shares = 100;
-        shareholders[0] = Shareholder({addr: msg.sender, shares: shares});
-        remainingCliptokens = _clipshares - shares;
+        shareholders[shareholders.length++] = Shareholder({addr: msg.sender, shares: _percentageforowner});
+        remainingCliptokens = 100 - _percentageforowner;
         shareholdersnum = shareholders.length;
         //testnet blocktube contract
         tokenaddr = 0xc6305f2c2f05e691cD973B3bb610CA9AE9a30720;
