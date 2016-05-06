@@ -86,6 +86,7 @@ contract blocktubeClip {
             // When we have reached the treshold, the likeamount is spread over the shareholders.
             // We invoke the token contract's function 'transfer'
             for (var i = shareholders.length - 1; i >= 0; i--) {
+                // DEES STUK IS NOG NIET GOED.
                 Token.transfer(shareholders[i].addr, (_likeamount / 100 * shareholders[i].shares)); 
             }
         }
