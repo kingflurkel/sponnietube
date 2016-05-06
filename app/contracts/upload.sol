@@ -78,7 +78,7 @@ contract blocktubeClip {
         // When the current amount of shareholders is lower than the treshold,
         // add the msg.sender to shareholders, and give him the amount of
         // shares left / number of shareholders.
-        if(shareholdersnum < treshold){
+        if(shareholders.length <= treshold){
             uint shares = remainingCliptokens / 2;
             shareholders[shareholders.length++] = Shareholder({addr: _liker, shares: shares});
             remainingCliptokens = remainingCliptokens - shares;
