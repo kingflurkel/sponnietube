@@ -87,6 +87,9 @@ contract blocktubeClip {
             // We invoke the token contract's function 'transfer'
             for (var i = shareholders.length - 1; i >= 0; i--) {
                 // DEES STUK IS NOG NIET GOED.
+                // Hier moet die votes tallied ding komen vanuit DAO proposals
+                // Gaan we onmiddellijk uitbetalen als er een like komt? Of 1 x per week?
+                // Moet de beneficiary ZELF zijn payout activeren?
                 Token.transfer(shareholders[i].addr, (_likeamount / 100 * shareholders[i].shares)); 
             }
         }
