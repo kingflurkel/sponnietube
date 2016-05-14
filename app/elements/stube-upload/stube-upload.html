@@ -95,13 +95,11 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           console.log('ok', this.metadata);
           this.$.ipfsupload.add(JSON.stringify(this.metadata), function(err, res) {
             // Yeah man - create that contract here now please....
-<<<<<<< HEAD
-            
-          }
-      }
-=======
+
             if (!err && res[0] && res[0].Hash) {
-              self._createNewUploadContract(res[0].Hash);
+              self._createNewUploadContract(res[0].Hash,function(){
+                console.log('mined!');
+              });
             } else {
               console.log('error uploading metadata to IPFS', err);
             }
@@ -119,7 +117,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         return address;
       },
 
-      _createNewUploadContract: function(hash) {
+      _createNewUploadContract: function(hash,fn) {
         var self = this;
         this.contracturl = this.resolveUrl('../../contracts/upload.json');
         this.importHref(this.contracturl, function(e) {
@@ -178,7 +176,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         });
 
       },
->>>>>>> origin/master
+
     });
   })();
   </script>
