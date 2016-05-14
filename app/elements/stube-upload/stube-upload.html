@@ -18,7 +18,13 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         display: block;
       }
     </style>
-    <ipfs-upload hash="{{clip.hash}}" host="/ip4/109.123.70.141/tcp/5001"></ipfs-upload>
+    <ipfs-upload hash="{{cliphash}}" on-ipfs-hash-received="_setipfshash" on-upload-started="_uploadstart" on-upload-error="_uploaderror" host="/ip4/109.123.70.141/tcp/5001"></ipfs-upload>
+    <template is="dom-if" if="{{ipfs_uploading}}">
+      <span>Uploading</span>
+    </template>
+    <template is="dom-if" if="{{cliphash}}">
+      <span>Upload complete</span>
+    </template>
     <paper-input label="Title" bind-value="{{title}}"></paper-input>
     <paper-input label="Description" bind-value="{{description}}"></paper-input>
     <paper-button raised on-tap="upload">upload</paper-button>
@@ -34,12 +40,61 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         web3: {
           type: Object,
           observer: '_web3'
+        },
+        cliphash: {
+          type: String,
+          //observer: '_oncliphashreceived'
+        },
+        readyforupload: {
+          type: Boolean,
+          value : false
+        },
+        ipfs_uploading: {
+          type: Boolean,
+          value : false          
+        },
+        metadata: {
+          type: Object,
+          value: {},
         }
+       },
+
+      _uploadstart: function(){
+        console.log('upload start');
+        this.ipfs_uploading = true;
       },
+
+      _uploaderror: function(){
+          console.log('error uploading');
+          this.ipfs_uploading = false;
+      },
+
+       _setipfshash: function(data){
+        console.log('got hash',this.cliphash);
+        this.metadata.uploaddate=  Math.floor(new Date().getTime()/1000);
+        this.metadata.video = data.detail.hash;
+        this.metadata.filename = data.detail.file.name;
+        this.metadata.filesize= data.detail.file.size;
+        this.metadata.filemimetype= data.detail.file.type;
+
+        this.ipfs_uploading = false;
+        this.createclip();
+       },
 
       upload: function(){
         // Yeah man, create the object and upload it!
-        
+//        this.readyforupload = true;
+        this.readyforupload = true;
+        this.createclip();
+      },
+      createclip:function (){
+          if ( this.readyforupload && this.cliphash){
+            // All is ready
+            this.metadata.name = this.title;
+            this.metadata.description = this.description;
+
+            console.log('ok',this.metadata);
+          }
       }
     });
   })();

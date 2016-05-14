@@ -2,26 +2,38 @@ var ffmpeg = require('ffmpeg');
 var fs = require('fs');
 var ipfsAPI = require('ipfs-api')
 
-var ipfsnode = '/ip4/10.0.5.38/tcp/5001';
+var ipfsnode = '/ip4/localhost/tcp/5001';
 
 function transcode(filename,cb) {
     try {
+
+        var out_filename = filename + '-360.avi';
+
+        if (fs.existsSync(out_filename)){
+            console.log('deleting file',out_filename);
+            fs.unlinkSync(out_filename);
+        }
+
         var process = new ffmpeg(filename);
         process.then(function(video) {
-            console.log('ok');
+            console.log('starting transcoding of file ',filename);
+            console.log(video.metadata);
             video
-                .setVideoSize('50%')
+//                .setVideoSize('?x480', true, false)
+                .setVideoSize('?x360', true, false)
+                .setVideoDuration(10)
+//                .setAudioCodec('libfaac')
 //                .setVideoCodec('mpeg4')
-                .setVideoFormat('avi')
-//                .setVideoBitRate('512K')
+//                .setVideoFormat('avi')
+//                .setVideoBitRate(1024)
                 //        .setAudioCodec('flv1')
                 //        .setAudioChannels(2)
-                .save('./b.avi', function(error, file) {
+                .save(out_filename, function(error, file) {
                     if (error) {
                         console.log(error);
                     }
                     if (!error) {
-                        console.log('Video file: ' + file);
+                        console.log('saved transcoded file:',file);
                         if (cb) cb();
                     }
                 });
@@ -35,9 +47,9 @@ function transcode(filename,cb) {
     }
 }
 
-//transcode('a.avi',function(){
-    upload('./c.mp4');
-//});
+transcode('a.avi',function(){
+//    upload('./c.mp4');
+});
 
 function upload(filename) {
     var filestream = fs.createReadStream(filename, {
