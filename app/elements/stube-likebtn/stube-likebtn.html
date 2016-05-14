@@ -34,7 +34,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         },
         clipaddr: {
           type: String,
-          observer: '_clipaddr'
+          observer: '_clipaddr',
+          value: '0x2448d647A9fe9d5Af611dC870ea655cC546346ef'
         },
         web3: {
           type: Object,
@@ -46,10 +47,66 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
       },
 
-      like: function() {
-        console.log('construct like object and send to contract: ', this.clipaddr, this.address);
+      transactionlog: function(log){
+        console.log(log);
+      },
 
+      like: function() {
+
+
+      var self = this;
+      
+        self.contracturl = self.resolveUrl('../../contracts/blocktube.json');
+        self.importHref(self.contracturl, function(e) {
+          self.contractjson = JSON.parse(e.target.import.body.innerText);
+
+        var MyContract = self.web3.eth.contract(self.contractjson.abi);
+        var myContractInstance = MyContract.at(self.clipaddr);
+    self.web3.eth.getGasPrice(function(err, result) {
+        var gasPrice = result.toNumber(10);
+        self.transactionlog('gas price: ', gasPrice);
+
+        var options = {
+          from: self.fixaddress(self.account),
+          //value: 1 * 1e18,
+          gas: 200000,
+          gasPrice: gasPrice,
+          nonce: new Date().getTime(),
+        };
+
+        self.transactionlog('Casting like');
+        self.pageselected = 2;
+
+        var result = myContractInstance.like.sendTransaction(self.clipaddr, 1, options,
+          function(err, txhash) {
+            if (err != null) {
+              console.log(err);
+              self.transactionlog('ERROR: Transaction didnt go through. See console.');
+            } else {
+              self.transactionlog('Transaction success: ', txhash);
+              console.log('Tx hash=', txhash);
+              self.setvoted();
+              // this triggers the locals-contractlistener component
+              self.txhash = txhash;
+            }
+
+            self.transactionlog('Your like has been added to the blockchain');
+          });
+      });
+    });
+    },
+
+    // Add 0x to address 
+    fixaddress: function(address) {
+      function strStartsWith(str, prefix) {
+        return str.indexOf(prefix) === 0;
       }
+
+      if (!strStartsWith(address, '0x')) {
+        return ('0x' + address);
+      }
+      return address;
+    },
     });
   })();
   </script>
