@@ -18,7 +18,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         display: block;
       }
     </style>
-    <ipfs-upload hash="{{cliphash}}" on-ipfs-hash-received="_setipfshash" on-upload-started="_uploadstart" on-upload-error="_uploaderror" host="/ip4/109.123.70.141/tcp/5001"></ipfs-upload>
+    <ipfs-upload id="ipfsupload" hash="{{cliphash}}" on-ipfs-hash-received="_setipfshash" on-upload-started="_uploadstart" on-upload-error="_uploaderror" host="/ip4/109.123.70.141/tcp/5001"></ipfs-upload>
     <template is="dom-if" if="{{ipfs_uploading}}">
       <span>Uploading</span>
     </template>
@@ -47,55 +47,138 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         },
         readyforupload: {
           type: Boolean,
-          value : false
+          value: false
         },
         ipfs_uploading: {
           type: Boolean,
-          value : false          
+          value: false
         },
         metadata: {
           type: Object,
           value: {},
         }
-       },
+      },
 
-      _uploadstart: function(){
+      _uploadstart: function() {
         console.log('upload start');
         this.ipfs_uploading = true;
       },
 
-      _uploaderror: function(){
-          console.log('error uploading');
-          this.ipfs_uploading = false;
+      _uploaderror: function() {
+        console.log('error uploading');
+        this.ipfs_uploading = false;
       },
 
-       _setipfshash: function(data){
-        console.log('got hash',this.cliphash);
-        this.metadata.uploaddate=  Math.floor(new Date().getTime()/1000);
+      _setipfshash: function(data) {
+        console.log('got hash', this.cliphash);
+        this.metadata.uploaddate = Math.floor(new Date().getTime() / 1000);
         this.metadata.video = data.detail.hash;
         this.metadata.filename = data.detail.file.name;
-        this.metadata.filesize= data.detail.file.size;
-        this.metadata.filemimetype= data.detail.file.type;
+        this.metadata.filesize = data.detail.file.size;
+        this.metadata.filemimetype = data.detail.file.type;
 
         this.ipfs_uploading = false;
         this.createclip();
-       },
+      },
 
-      upload: function(){
+      upload: function() {
         this.readyforupload = true;
         this.createclip();
       },
-      createclip:function (){
-          if ( this.readyforupload && this.cliphash){
-            // All is ready
-            this.metadata.name = this.title;
-            this.metadata.description = this.description;
+      createclip: function() {
+        var self = this
+        if (this.readyforupload && this.cliphash) {
+          // All is ready
+          this.metadata.name = this.title;
+          this.metadata.description = this.description;
 
-            console.log('ok',this.metadata);
+          console.log('ok', this.metadata);
+          this.$.ipfsupload.add(JSON.stringify(this.metadata), function(err, res) {
             // Yeah man - create that contract here now please....
+<<<<<<< HEAD
             
           }
       }
+=======
+            if (!err && res[0] && res[0].Hash) {
+              self._createNewUploadContract(res[0].Hash);
+            } else {
+              console.log('error uploading metadata to IPFS', err);
+            }
+          });
+        }
+      },
+      fixaddress: function(address) {
+        function strStartsWith(str, prefix) {
+          return str.indexOf(prefix) === 0;
+        }
+
+        if (!strStartsWith(address, '0x')) {
+          return ('0x' + address);
+        }
+        return address;
+      },
+
+      _createNewUploadContract: function(hash) {
+        var self = this;
+        this.contracturl = this.resolveUrl('../../contracts/upload.json');
+        this.importHref(this.contracturl, function(e) {
+          self.contractjson = JSON.parse(e.target.import.body.innerText);
+
+          console.log('Creating new contract on account ', self.account);
+
+          this.web3.eth.getGasPrice(function(err, result) {
+            var gasPrice = result.toNumber(10);
+
+            var MyContract = self.web3.eth.contract(self.contractjson.abi);
+            //var contractInstance = 
+            MyContract.new(hash, 100, 50, {
+              from: self.fixaddress(self.account),
+              gasPrice: gasPrice,
+              gasLimit: 3000000,
+              gas: 2000000,
+              data: self.contractjson.bytecode
+            }, function(err, myContract) {
+              if (!err) {
+                // NOTE: The callback will fire twice!
+                // Once the contract has the transactionHash property set and once its deployed on an address.
+
+                // e.g. check tx hash on the first call (transaction send)
+                if (!myContract.address) {
+                  console.log('Your upload contract has been deployed to the Ethereum network. Transaction hash is', myContract.transactionHash);
+                  self.txhash = myContract.transactionHash;
+                  console.log('Wait a new moments while we mine it. You will receive your address when it is mined.');
+                  //self.showtoast("Here's the TX hash: " + self.txhash);
+                  self.fire('add-toast', {
+                    msg: 'Here\'s the TX hash: ' + self.txhash
+                  });
+
+                  // check address on the second call (contract deployed)
+                } else {
+                  console.log('Your upload contract has been deployed. Your contract address is', myContract.address);
+                  self.contractaddress = myContract.address;
+                  //self.showtoast("Contract deployed: " + self.contractaddress);
+                  self.fire('add-toast', {
+                    msg: 'Contract deployed: ' + self.contractaddress
+                  });
+                  fn(self.contractaddress);
+                }
+              } else {
+                console.log('error:', err);
+                //self.showtoast("Error: " + err);
+                self.fire('add-toast', {
+                  msg: 'Error.'
+                });
+              }
+            });
+          });
+
+        }, function(e) {
+          console.log('ERROR!', e);
+        });
+
+      },
+>>>>>>> origin/master
     });
   })();
   </script>
