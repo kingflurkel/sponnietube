@@ -19,6 +19,9 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       }
     </style>
     <ipfs-upload hash="{{clip.hash}}" host="/ip4/109.123.70.141/tcp/5001"></ipfs-upload>
+    <paper-input label="Title" bind-value="{{title}}"></paper-input>
+    <paper-input label="Description" bind-value="{{description}}"></paper-input>
+    <paper-button raised on-tap="upload">upload</paper-button>
   </template>
   <script>
   (function() {
@@ -28,10 +31,9 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       is: 'stube-upload',
 
       properties: {
-        foo: {
-          type: String,
-          value: 'stube-upload',
-          notify: true
+        web3: {
+          type: Object,
+          observer: '_web3'
         }
       }
     });
