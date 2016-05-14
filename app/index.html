@@ -57,7 +57,6 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
   <!-- For shared styles, shared-styles.html import in elements.html -->
   <style is="custom-style" include="shared-styles"></style>
 
-  <script src="./vendor/ipfsapi.min.js"></script>
 
 </head>
 
@@ -163,7 +162,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
           <section data-route="upload">
             <paper-material elevation="1">
-              <!-- <ipfs-upload></ipfs-upload> -->
+              <stube-upload web3="{{web3}}" account="{{account}}"></stube-upload>
             </paper-material>
           </section>
 

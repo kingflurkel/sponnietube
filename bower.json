@@ -9,11 +9,7 @@
     "neon-elements": "PolymerElements/neon-elements#^1.0.0",
     "page": "visionmedia/page.js#~1.6.3",
     "web3-wallet": "~0.0.2",
-    "file-upload": "~1.6.3",
-    "ipfs-upload": "sponnet/ipfs-upload"
+    "ipfs-upload": "^0.0.10"
   },
-  "devDependencies": {},
-  "resolutions": {
-    "js-ipfs-api": "^2.13.2"
-  }
+  "devDependencies": {}
 }
