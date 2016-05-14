@@ -10,6 +10,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 <link rel="import" href="../../bower_components/polymer/polymer.html">
 <link rel="import" href="../../bower_components/paper-material/paper-material.html">
 <link rel="import" href="../../bower_components/iron-ajax/iron-ajax.html">
+<link rel="import" href="../stube-likebtn/stube-likebtn.html">
 
 <dom-module id="stube-item">
   <template>
@@ -32,7 +33,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         margin: 0px;
       }
       .container {
-      @apply(--layout-horizontal);
+      @apply(--layout-vertical);
     }
     .flexchild {
       @apply(--layout-flex);
@@ -40,9 +41,12 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     .gris {
       color: --google-grey-100;
     }
+    .actionbuttons {
+      @apply(--layout-horizontal);
+    }
     </style>
    
-    <div class="container">
+    <div class="container vertical layout">
 
 
     <stube-player videohash="{{videohash}}"></stube-player>
@@ -61,7 +65,17 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           comments
         </div>
         <div class="paper-font-body1">{{description}}</div>
+        <div class="actionbuttons">
+          <paper-icon-button toggles icon="favorite" active="{{likebutton}}"></paper-icon-button>
+          <stube-likebtn address="{{address}}" clipaddr="{{ipfsobject}}"></stube-likebtn>
+          <p class="paper-font-body2 gris">{{likes}}</p>
+        </div>
+      </div>
+      <div class="paper-font-body2 gris"><span>{{username}}</span> - <span>{{views}}</span> views</div>
 
+      <div class="paper-font-body1">{{ipfsobject}}</div>
+      <div class="paper-font-body1">{{descr}}</div>
+      <div></div>
       </div>
     </div>
 
@@ -75,7 +89,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         is: 'stube-item',
 
         listeners: {
-        'tap': 'hitMe',
+        //'tap': 'hitMe',
       },
 
         properties: {
@@ -114,13 +128,23 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
             type: String,
             notify:true
 
-          }
+          },
+          likebutton: {
+          type: Boolean,
+          observer: '_likebutton',
+          value: false
+        }
+
         },
         hitMe: function(){
           //this.fire('go', { msg: "/clip/hash1" });
           //location ="/clip/hash1";
 
           page('/clip/'+this.hash);
+        },
+
+        _likebutton: function(){
+          console.log('Like? ', this.likebutton);
         },
 
     

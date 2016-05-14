@@ -11,6 +11,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 <link rel="import" href="../../bower_components/polymer/polymer.html">
 <link rel="import" href="../../bower_components/paper-icon-button/paper-icon-button.html">
 <link rel="import" href="../../bower_components/iron-ajax/iron-ajax.html">
+<link rel="import" href="../stube-likebtn/stube-likebtn.html">
 
 
 <dom-module id="stube-clip">
@@ -37,7 +38,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     <paper-material elevation="1">
       <div class="horizontal layout">
       <div class="paper-font-headline flex">{{title}}</div>
-      <paper-icon-button toggles icon="favorite"></paper-icon-button>
+      <paper-icon-button toggles icon="favorite" active="{{likebutton}}"></paper-icon-button>
+      <stube-likebtn address="{{address}}" clipaddr="{{ipfsobject}}"></stube-likebtn>
       <p class="paper-font-body2 gris">{{likes}}</p>
     </div>
       <div class="paper-font-body2 gris"><span>{{username}}</span> - <span>{{views}}</span> views</div>
@@ -100,6 +102,11 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         likes: {
           type: Number,
           value: 0
+        },
+        likebutton: {
+          type: Boolean,
+          observer: '_likebutton',
+          value: false
         }
 
       },
@@ -110,6 +117,10 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         this.$.ajax.url = '//localhost:8080/ipfs/'+this.ipfsobject;
 
         this.$.ajax.generateRequest();
+      },
+
+      _likebutton: function(){
+        console.log('Like? ', this.likebutton);
       },
 
       handleResponse: function(){
