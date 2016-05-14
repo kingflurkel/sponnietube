@@ -11,14 +11,24 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 <link rel="import" href="../../bower_components/polymer/polymer.html">
 
 <dom-module id="stube-newplaylist">
+
   <template>
+
+    <iron-localstorage name="blocktube-playlists"
+    value="{{playlists}}"
+    on-iron-localstorage-load-empty="initplaylists"
+  ></iron-localstorage>
+
     <style>
       :host {
         display: block;
       }
     </style>
     <h2 class="page-title">New playlist</h2>
-    <p>At account <span>{{account}}</span></p>
+    <p>
+      At account
+      <span>{{account}}</span>
+    </p>
     <paper-input bind-value="{{playlistname}}" label="Playlist name"></paper-input>
     <paper-button raised on-tap="savePlaylist">Save</paper-button>
   </template>
@@ -36,10 +46,17 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         }
       },
 
-      savePlaylist: function(){
+      initplaylists: function() {
+        this.playlists = [];
+      },
+
+      savePlaylist: function() {
+        var self = this;
         //deploy playlist with title. 
-        this._createNewPlaylistContract(this.playlistname, function(e){
-          console.log(e);
+        this._createNewPlaylistContract(this.playlistname, function(e) {
+          //          console.log(e);
+          self.push('playlists', e);
+          console.log('playlist added to your local storage...');
         });
       },
 
@@ -55,7 +72,9 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       },
 
       _createNewPlaylistContract: function(playlistname, fn) {
-        this.fire('add-toast', { msg: 'Creating playlist...' });
+        this.fire('add-toast', {
+          msg: 'Creating playlist...'
+        });
         var self = this;
         this.contracturl = this.resolveUrl('../../contracts/playlist.json');
         this.importHref(this.contracturl, function(e) {
@@ -68,7 +87,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
             var MyContract = self.web3.eth.contract(self.contractjson.abi);
             //var contractInstance = 
-            MyContract.new(self.playlistname,{
+            MyContract.new(self.playlistname, {
               from: self.fixaddress(self.account),
               gasPrice: gasPrice,
               gasLimit: 3000000,
@@ -85,26 +104,32 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                   self.txhash = myContract.transactionHash;
                   console.log('Wait a new moments while we mine it. You will receive your address when it is mined.');
                   //self.showtoast("Here's the TX hash: " + self.txhash);
-                  self.fire('add-toast', { msg: 'Here\'s the TX hash: ' + self.txhash });
+                  self.fire('add-toast', {
+                    msg: 'Here\'s the TX hash: ' + self.txhash
+                  });
 
                   // check address on the second call (contract deployed)
                 } else {
                   console.log('Your playlist contract has been deployed. Your contract address is', myContract.address);
                   self.contractaddress = myContract.address;
                   //self.showtoast("Contract deployed: " + self.contractaddress);
-                  self.fire('add-toast', { msg: 'Contract deployed: ' + self.contractaddress });
+                  self.fire('add-toast', {
+                    msg: 'Contract deployed: ' + self.contractaddress
+                  });
                   fn(self.contractaddress);
                 }
               } else {
                 console.log('error:', err);
                 //self.showtoast("Error: " + err);
-                self.fire('add-toast', { msg: 'Error.' });
+                self.fire('add-toast', {
+                  msg: 'Error.'
+                });
               }
             });
           });
 
         }, function(e) {
-          console.log('ERROR!',e);
+          console.log('ERROR!', e);
         });
 
       },
