@@ -80,16 +80,13 @@ contract blocktubeClip {
         // shares left / number of shareholders.
         if(shareholders.length <= treshold){
             uint shares = remainingCliptokens / 2;
-            shareholders[shareholders.length++] = Shareholder({addr: _liker, shares: shares});
+            uint shareId = shareholders.length++;
+            shareholders[shareId] = Shareholder({addr: _liker, shares: shares});
             remainingCliptokens = remainingCliptokens - shares;
         } else {
             // When we have reached the treshold, the likeamount is spread over the shareholders.
             // We invoke the token contract's function 'transfer'
-            for (var i = shareholders.length - 1; i >= 0; i--) {
-                // DEES STUK IS NOG NIET GOED.
-                // Hier moet die votes tallied ding komen vanuit DAO proposals
-                // Gaan we onmiddellijk uitbetalen als er een like komt? Of 1 x per week?
-                // Moet de beneficiary ZELF zijn payout activeren?
+            for (uint i = 0; i < shareholders.length; i++) {
                 Token.transfer(shareholders[i].addr, (_likeamount / 100 * shareholders[i].shares)); 
             }
         }
